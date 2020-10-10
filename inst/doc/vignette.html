@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Neal Haddaway" />
+
+<meta name="date" content="2020-10-05" />
+
+<title>Assessing the discoverability of a research record based on title, abstract and keywords using discoverableresearch v0.0.0.9000</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Assessing the discoverability of a research record based on title, abstract and keywords using discoverableresearch v0.0.0.9000</h1>
+<h4 class="author">Neal Haddaway</h4>
+<h4 class="date">2020-10-05</h4>
+
+
+
+<p>#Overview As authors of research articles, it is our priority to make our work as findable as possible so that it can have impact. Research articles are typically found by readers searching web-based tools with relevant search terms. These search tools may be ‘search engines’ (e.g. Google Scholar) or ‘bibliographic databases’ (e.g. Scopus or Science Citation Index Expanded). Bibliographic databases typically catalogue records based on the titles, abstracts and keywords (collectively referred to as ‘topic words’ in some platforms, such as Web of Science). Users then search for terms within these fields.</p>
+<p>Whilst ‘systematic searches’ typically involve long search strings composed of large numbers of different synonyms to account for differences in terminology used to describe a concept, people searching for research articles often use one or a small set of terms to find relevant work.</p>
+<p>For example, someone wishing to find research about ‘systematic reviews’ in the field of health might enter the term <code>(&quot;systematic review&quot; AND health)</code> in the search facility and select to search titles, abstracts and keywords. This ‘Boolean’ search string would bring back all records that contained both the phrase ‘systematic review’ and the word health in the title, abstract or keywords. However, some authors might use different terms to describe relevant research: they may have used the terms ‘systematic literature review’ and ‘medicine’ for example.</p>
+<p>As the author of a research article, we have three key opportunities for our article to be found in this scenario: the title, the abstract and the keywords. Thus, to maximise the chances that our articles will be found, we should use DIFFERENT terminology across all three fields to make it more likely that a potential reader will find our work with a specific search. In our hypothetical example, we could have the following title, abstract and keywords:</p>
+<p><em>Title: “On the use of keywords and the discoverability of systematic reviews” </em>Abstract: “In this research article, we investigate the use of different strategies for the development of article keywords by academic writers to improve the discoverability of systematic reviews. We appraise the utility of keyword diversity and provide suggestions of how to draft potential keywords for article indexing and cataloging in bibliographic databases in order to improve systematic review discoverability.” *Keywords: systematic reviews; discoverability; keywords; indexing; cataloging; bibliographic databases</p>
+<p>#Getting started Firstly we can create objects containing these texts as follows:</p>
+<p><code>title &lt;- &#39;On the use of keywords and the discoverability of systematic reviews&#39;</code> <code>abstract &lt;- &quot;In this research article, we investigate the use of different strategies for the development of article keywords by academic writers to improve the discoverability of systematic reviews. We appraise the utility of keyword diversity and provide suggestions of how to draft potential keywords for article indexing and cataloging in bibliographic databases in order to improve systematic review discoverability.&quot;</code> <code>keywords &lt;- &#39;systematic reviews; discoverability; keywords; indexing; cataloging; bibliographic databases&#39;</code></p>
+<p>We can then split our keywords into a vector of strings: <code>keywords &lt;- format_keywords(keywords, sep = &quot;;&quot;)</code></p>
+<p><code>format_keywords()</code> automatically recognises a semicolon as a default separator unless otherwise specified, and also strips out any white space, returning a vector of keywords all in lower case.</p>
+<p>#Check discoverability of keywords We can now check the discoverability of our drafted keywords using the <code>check_keywords()</code> function:</p>
+<p><code>kw_check &lt;- check_keywords(title = title, abstract = abstract, keywords = keywords)</code> <code>kw_check</code></p>
+<p>This provides us with a dataframe with each row consisting of a keyword and a description of whether the word already exists in the title and abstract: if not, it is considered a possible candidate for a keyword. If it is already present, then a different keyword or set of keywords would iprove discoverability.</p>
+<p>#Assess discoverability of the title We can now go further to look at how discoverable our title might be.</p>
+<p>Firstly, we can look at how long the title is and how many words in the title are useful for research discovery. Very long titles are hard to read and may lose the reader’s attention, but very short titles lose chances to contain relevant search terms. Furthermore, search systems like bibliographic databases do not search for ‘stop words’ (words like ‘and’, ‘the’ and ‘for’) unless they are in a precise phrase. If our title contains lots of stop words, it may not be very discoverable.</p>
+<p>We can check the title suitability based on length with the following: <code>title_disc &lt;- check_title_length(title)</code> <code>cat(title_disc)</code></p>
+<p><code>Your title contains 11 words in total; 5 of these words are useful for research discovery (i.e. they are not &#39;stop words&#39;). This compares to a median of 7 total words (range: 4 to 53) and 5 useful search words (range: 1 to 40) in a sample of bibliographic records in PubMed (see documentation for details).Your title is therefore somewhat longer than average in total length.</code></p>
+<p><code>Your title has a proportional word utility of 0.45, which compares to a mean word utility of 0.73 (SD: 0.002) in the PubMed sample. You could therefore improve your title by increasing the number of useful terms (i.e. non-stop words).</code></p>
+<p>We now have a report of our title length relative to a preloaded sample search that describes the comparative length of our title, and the relative proportion of title words that are stop words. The function compares your title to 10,000 titles obtained from a search for the term <code>research</code> in PubMed (Sep 2020), and provides recommendations on whether your title could be improved by increasing the proportion of title words that are not stop words.</p>
+<p>#Calculate title uniqueness We can then go further to calculate the uniqueness of our title compared with titles in a given sample.</p>
+<p>NOTE: Unique titles are likely to be more discoverable and memorable to some extent (although uniqueness may indicate the use of inappropriate or very infrequently used terminology). Uniqueness alone does not improve discoverability and should only be thought of in the context of a diverse and appropriate set of terms used across titles, abstracts and keywords. Calculating uniqueness can identify the use of common idioms that may make it hard to identify which article is the most relevant one.</p>
+<p>We should first of all import an .ris file containing references against which we wish to compare our title:</p>
+<p><code>testset &lt;- &quot;data/sample_titles.txt&quot;</code> <code>titlecomparison &lt;- compare_title(title, testset = testset)</code></p>
+<p>The output from this function is a report describing the overall similarity between our title and the titles in the test set, along with a historgram showing the similarity scores. Depedning on a default (arbitrary) threshold similarity of 0.6, an output dataframe of similar records can be returned so that the similar records can be examined in the input .ris format. The threshold and the option to return matching records can be adjusted with <code>threshold = 0.5</code> (for example) and <code>matches = TRUE</code>.</p>
+<p>#Suggest keywords Now that we know something about whether our keywords and title are suitable and optimal for discoverability, we can go about finding suggestions of additional keywords based on analysis of our full text. Often, we will use many more relevant words in our full texts than in the title, abstract and keywords, so this can be a really useful source of synonyms.</p>
+<p>Firstly, import the full text as a .txt or a string: <code>fulltext &lt;- readr::read_file(&quot;data/fulltext.txt&quot;)</code></p>
+<p>This text is exctracted from the publisher’s HTML, so we would benefit from doing some basic tidying to remove unnecessary characters that might hamper our ability to find and separate words:</p>
+<p><em>First we can replace carriage returns with spaces: <code>fulltext &lt;- gsub(&quot;\n&quot;, &quot; &quot;, fulltext)</code> </em>Then we can replace double spaces with single spaces: <code>fulltext &lt;- gsub(&quot;\\s+&quot;,&quot; &quot;,fulltext)</code></p>
+<p>Now we can extract non-stop words from our full text and compare them with our draft abstract and keywords to see potential keywords: <code>poss_keywords &lt;- suggest_keywords(title, abstract, fulltext)</code> <code>poss_keywords</code></p>
+<p>The output is a dataframe containing a list of potential keywords of between 1 and 3 words long, a sum of the number of times they appear in the full text, and a statement regarding their suitability as keywords based on their presence in our given title and abstract.</p>
+<p>#Suggest title words We can follow a similar process to suggest title words based on a given abstract and set of keywords: <code>poss_title &lt;- suggest_title(abstract, keywords, fulltext)</code> <code>poss_title</code></p>
+<p>The output is a dataframe containing a list of potential title words of between 1 and 3 words long, a sum of the number of times they appear in the full text, and a statement regarding their suitability as title words based on their presence in our given abstract and keywords.</p>
+<p>#A better written example To examine how a differently worded set of fields can affect discoverability, we can run the same functions on this, optimised example:</p>
+<p><code>title &lt;- &quot;A research article investigating diverse keyword terminology and systematic reviews discoverability&quot;</code> <code>abstract &lt;-  &quot;In this empirical manuscript, we describe the results of a study to assess the impacts of employing different strategies for the development of article keywording by academic writers to improve the effectiveness of academic searches in retrieving relevant articles, specifically within the context of evidence syntheses. We appraise the utility of terminological diversity and provide suggestions of how to draft potential synonyms for article indexing and cataloging in bibliographic databases in order to improve findability and research impact.&quot;</code> <code>keywords &lt;-  &quot;systematic reviewing; systematic literature review; abstracting; open discovery; information retrieval; informatics&quot;</code></p>
+<p><code>keywords &lt;- format_keywords(keywords, sep = &quot;;&quot;)</code> <code>kw_check &lt;- check_keywords(title = title, abstract = abstract, keywords = keywords)</code> <code>kw_check</code> <code>title_disc &lt;- check_title_length(title)</code> <code>cat(title_disc)</code> <code>testset &lt;- &quot;data/sample_titles.txt&quot;</code> <code>titlecomparison &lt;- compare_title(title, testset = testset)</code> <code>poss_keywords &lt;- suggest_keywords(title, abstract, fulltext)</code> <code>poss_keywords</code> <code>poss_title &lt;- suggest_title(abstract, keywords, fulltext)</code> <code>poss_title</code></p>
+<p>#Overview check We can get an overview of the terms in the title and keywords and whether they are present in the abstract by using the ‘check_fields()’ function:</p>
+<p><code>check &lt;- check_fields(title, abstract, keywords)</code></p>
+<p>Which provides us with a full dataframe containing all ngrams (1-, 2-, and 3- word phrases) across each specified field (after removing punctuation and stopwords), detailing in each column, which terms are present in which fields:</p>
+<p><code>check$df</code></p>
+<p>It also provides us with subsets for terms across each field and whether they are present in multiple fields: <code>check$tit_terms</code> <code>check$abs_terms</code> <code>check$key_terms</code></p>
+<p>Finally, we can print out a report that summarises which terms could be amended or replaced to improve discoverability:</p>
+<p><code>check$report</code></p>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
